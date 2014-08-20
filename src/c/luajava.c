@@ -2838,9 +2838,35 @@ JNIEXPORT jstring JNICALL Java_org_keplerproject_luajava_LuaState__1toString
 {
    lua_State * L = getStateFromCPtr( env , cptr );
 
-   const char * str = lua_tostring( L , idx );
+    size_t len;
+   const char * str = lua_tolstring( L , idx , &len);
 
    return ( *env )->NewStringUTF( env , str );
+}
+
+/*
+ * Class:     org_keplerproject_luajava_LuaState
+ * Method:    _toByteArray
+ * Signature: (Lorg/keplerproject/luajava/CPtr;I)[B
+ */
+JNIEXPORT jbyteArray JNICALL Java_org_keplerproject_luajava_LuaState__1toByteArray
+(JNIEnv *env, jobject jobj, jobject cptr, jint idx) {
+    lua_State * L = getStateFromCPtr( env , cptr );
+    
+    size_t len;
+    const char * str = lua_tolstring( L , idx , &len);
+    
+    jbyteArray ba = (*env)->NewByteArray(env, (jsize) len);
+	if (!ba) {
+		return NULL;
+	}
+	jbyte *b = (*env)->GetByteArrayElements(env, ba, NULL);
+	if (!b) {
+		return NULL;
+	}
+	memcpy(b, str, len);
+	(*env)->ReleaseByteArrayElements(env, ba, b, 0);
+	return ba;
 }
 
 
