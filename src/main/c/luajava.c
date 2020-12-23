@@ -36,7 +36,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "luajava.h"
+#include <string.h>
+#include "org_keplerproject_luajava_LuaState.h"
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
@@ -3006,7 +3007,7 @@ JNIEXPORT void JNICALL Java_org_keplerproject_luajava_LuaState__1pushString__Lor
    
    lua_pushlstring( L , cBytes , n );
    
-   ( *env )->ReleaseByteArrayElements( env , bytes , cBytes , 0 );
+   ( *env )->ReleaseByteArrayElements( env , bytes , (jbyte *) cBytes , 0 );
 }
 
 

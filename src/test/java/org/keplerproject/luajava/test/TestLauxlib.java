@@ -48,17 +48,17 @@ public class TestLauxlib extends TestCase
     LuaState L = LuaStateFactory.newLuaState();
     L.openLibs();
     
-    int loadRes = L.LloadFile("wrongLuaFile.lua");
+    int loadRes = L.LloadFile("test/wrongLuaFile.lua");
     assertEquals(loadRes, LuaState.LUA_ERRSYNTAX.intValue());
     System.out.println(L.toString(-1));
     L.pop(1);
     
-    loadRes = L.LloadFile("simpleLuaFile.lua");
+    loadRes = L.LloadFile("test/simpleLuaFile.lua");
     assertEquals(loadRes, 0);
     L.pcall(0, 0, 0);
 
     // test loadbuffer
-    FileInputStream input = new FileInputStream("wrongLuaFile.lua");
+    FileInputStream input = new FileInputStream("test/wrongLuaFile.lua");
     byte[] bytes = new byte[input.available()];
     input.read(bytes);
     input.close();
@@ -67,7 +67,7 @@ public class TestLauxlib extends TestCase
     assertEquals(LuaState.LUA_ERRSYNTAX.intValue(), loadRes);
     System.out.println(L.toString(-1));
     
-    input = new FileInputStream("simpleLuaFile.lua");
+    input = new FileInputStream("test/simpleLuaFile.lua");
     bytes = new byte[input.available()];
     input.read(bytes);
     input.close();

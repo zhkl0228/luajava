@@ -79,7 +79,7 @@ public class TestLuaMap extends TestCase
     // test using a lua table
     LuaState L = LuaStateFactory.newLuaState();
     L.openLibs();
-    int err = L.LdoFile("testMap.lua");
+    int err = L.LdoFile("test/testMap.lua");
     if(err != 0)
     {
       switch (err)
